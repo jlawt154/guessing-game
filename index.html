@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Guessing Game</title>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@1,900&display=swap');
+body {
+  text-align:center;
+  font-family: 'Fira Sans', sans-serif;
+  margin:0;
+  padding:0;
+}
+main {
+  width:80%;
+  height:100vh;
+  background-color:darkgray;
+  margin:auto;
+}
+h1 {
+  background-color: hotpink;
+  margin:auto;
+  border-radius:2rem;
+  font-size:5vw;
+}
+audio {
+  display:none;
+}
+form .letter-input {
+  margin:0.5rem;
+  text-align:center;
+  font-size:5rem;
+  width: calc(80%/5);
+  box-shadow: 5px 5px 10px 4px rgba(200,25,105,80%);
+  box-sizing:border-box;
+  background-color:rgba(220,20,75,75%);
+  color:white;
+}
+tr {
+  vertical-align:top;
+}
+th, td {
+  padding: 1rem;
+  text-align:center;
+  border: 2px dashed hotpink;
+}
+table {
+    width:90%;
+    margin:auto;
+    margin-top: 1rem;
+}
+@keyframes characterSelect {
+    0% {
+    opacity:0%;
+  }
+  50% {
+    opacity:0%;
+  }
+  100% {
+    opacity:100%;
+  }
+}
+        </style>
+    </head>
+    <body>
+        <main>
+            <h1>GUESS THE PASSWORD</h1>
+            <audio id="character-audio" controls>
+            <source src="" type="audio/ogg">
+            Your browser does not support mp3 audio
+          </audio>
+            <h2>SELECT YOUR CHARACTER</h2>
+            <img src="" width="100" height="100" id="character-image" alt="character-select-image" />
+          <select name="image-choice" id="image-select">
+            <option value="" disabled selected>Select an image</option>
+            <option value="mario-raccoon">Tanooki Mario</option>
+            <option value="cat-mario">Cat Mario</option>
+            <option value="astro-mario">Astro Mario</option>
+            <option value="peach-wedding">Wedding Peach</option>
+            <option value="peach-pink">Pink Peach</option>
+            <option value="peach-fire">Fire Peach</option>
+            <option value="dk-ice">Ice Donkey-Kong</option>
+            <option value="dk-fire">Fire Donkey-Kong</option>
+            <option value="dk-black">Black Donkey-Kong</option>
+          </select>
+            <form id="password-form">
+            </form>
+            <table>
+            <thead>
+              <tr>
+                <th>Wrong Letter</th>
+                <th>Wrong Letter</th>
+                <th>Wrong Letter</th>
+                <th>Wrong Letter</th>
+                <th>Wrong Letter</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td id="td0">X: <br></td>
+                <td id="td1">X: <br></td>
+                <td id="td2">X: <br></td>
+                <td id="td3">X: <br></td>
+                <td id="td4">X: <br></td>
+              </tr>
+            </tbody>
+          </table>
+            <h1 id="result-head"></h1>
+          </main>
+        <script>const imageSelect = document.getElementById("image-select");
+            const characterImg = document.getElementById("character-image");
+            const selectAudio = document.getElementById('character-audio');
+            const charAudio = "https://drive.google.com/uc?id=1RSPFDv4-V7tWHNMrqY6z9RBN_Nthb7_j";
+            selectAudio.src = charAudio;
+            
+            const marioRaccoonSrc =
+              "https://drive.google.com/uc?export=view&id=1Zehno27FMtG5hDd-TyFRky9wyv53lcHj";
+            const marioCatSrc =
+              "https://drive.google.com/uc?export=view&id=1ZgigMQZ1CmJVYNhZ6vaz7eiKk9ZjfNlY";
+            const marioAstroSrc =
+              "https://drive.google.com/uc?export=view&id=1ZpeukvmCIX8dy_2md0zDO8rkKZoLHfRT";
+            const peachWeddingSrc =
+              "https://drive.google.com/uc?export=view&id=1_2ZQiL4XlmPUI4UEW2fqvRFk4078cErK";
+            const peachPinkSrc =
+              "https://drive.google.com/uc?export=view&id=1_4CcPhxb5oAa6Myzh8MZv2Fe7nWiupI_";
+            const peachFireSrc =
+              "https://drive.google.com/uc?export=view&id=1_HjCzHSVvQadyuzQeNqCncP8ULKVBtWj";
+            const dkIceSrc =
+              "https://drive.google.com/uc?export=view&id=1_Z1aNb5oK-MqI3hmqF_-Ba4tPWjkhAtD";
+            const dkFireSrc =
+              "https://drive.google.com/uc?export=view&id=1_bE8cmnBAj1hYNmV_SRnun8NpDZCOMHF";
+            const dkBlackSrc =
+              "https://drive.google.com/uc?export=view&id=1_f3Xb2c5vmEXk4l4XEs3RvhQONNxdVpx";
+            
+            const characterSelectSrc =
+              "https://ksr-ugc.imgix.net/assets/027/277/355/e6cd621293ea54a4415f1243d878213c_original.PNG?ixlib=rb-4.1.0&crop=faces&w=1024&h=576&fit=crop&v=1574225922&auto=format&frame=1&q=92&s=4418408905447cda91a3356214d2b325";
+            
+            characterImg.src = characterSelectSrc;
+            
+            imageSelect.addEventListener("change", function () {
+              console.log(this.value);
+              characterImg.style.animation = "characterSelect 2s linear 1"
+              selectAudio.play();
+              if (this.value == "mario-raccoon") 
+              {
+                characterImg.src = marioRaccoonSrc;
+              } 
+              else if (this.value == "cat-mario") {
+                characterImg.src = marioCatSrc;
+              }
+              else if (this.value == "astro-mario")   {
+                characterImg.src = marioAstroSrc;
+              }
+              else if (this.value == "peach-wedding") 
+              {
+                characterImg.src = peachWeddingSrc;
+              }
+                else if (this.value == "peach-pink") 
+              {
+                characterImg.src = peachPinkSrc;
+              }
+                else if (this.value == "peach-fire") 
+              {
+                characterImg.src = peachFireSrc;
+              }
+                else if (this.value == "dk-ice") 
+              {
+                characterImg.src = dkIceSrc;
+              }
+                else if (this.value == "dk-fire") 
+              {
+                characterImg.src = dkFireSrc;
+              }
+                else if (this.value == "dk-black") 
+              {
+                characterImg.src = dkBlackSrc;
+              }
+            });
+            const passwordForm = document.getElementById('password-form');
+            const resultText = document.getElementById('result-head');
+            let phrase = "guess";
+            
+            let incorrectGuess = 0;
+            let correctGuess = 0;
+            let index = 0;
+            
+            for (let char of phrase) {
+              // console.log("hello");
+              const letterInput = document.createElement('input');
+              letterInput.type = "text";
+              letterInput.maxLength = "1";
+              letterInput.classList.add('letter-input');
+              letterInput.id = index.toString();
+              passwordForm.appendChild(letterInput);
+              index++;
+            }
+            
+            passwordForm.addEventListener("change", function(event) {
+              console.log(event.target.value);
+              const thisInput = event.target;
+              const guess = thisInput.value;
+              console.log(incorrectGuess);
+              console.log(correctGuess);
+              console.log(guess);
+              console.log(thisInput.id);
+              
+              if(guess === phrase[thisInput.id]) {
+                console.log("Your guess was correct.");
+                thisInput.disabled = true;
+                thisInput.placeholder = guess;
+                correctGuess++;
+              };
+              if (correctGuess == 5) {
+                resultText.textContent = "You WIN!"
+              }
+              if (incorrectGuess <= 7) {
+              if (guess != phrase[thisInput.id]) {
+                console.log("Your guess was incorrect.");
+                document.getElementById(`td${thisInput.id}`).innerHTML += "<span>" + thisInput.value + "</span>";
+                document.getElementById('');
+                incorrectGuess++;
+              }
+              };
+              if (incorrectGuess >= 8) {
+                console.log('You have failed.');
+                thisInput.disabled = true;
+                resultText.textContent = "You have lost."
+              };
+            });</script>
+    </body>
+</html>
